@@ -1,0 +1,27 @@
+{% extends 'questions/base.html' %}
+
+{% block content %}
+    
+
+    
+    <h3>Recent questions</h3>
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %} 
+            <li>
+            {% if question.has_answer %}
+                <i class="fas fa-check-circle"></i>
+            {% endif %} 
+            <a href="{% url 'questions:detail' question.id %}">
+            {{ question.question_text }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No questions are available at the moment.</p>
+    {% endif %}
+    <br/>
+    <form action="add">
+        <button class="btn btn-success" type="submit">
+        Ask a new question</button>
+    </form>    
+{% endblock %}

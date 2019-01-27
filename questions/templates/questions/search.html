@@ -1,0 +1,44 @@
+{% extends 'questions/base.html' %}
+
+{% block content %}
+    <h3>Search results</h3>
+    {% if results %}
+        <ul>
+        
+        {% for key, value in results.items %}  
+            <br/>    
+            <h4>{{key}}</h4>            
+            {% if key == 'Questions' %}
+                {% if value %}                               
+                    {% for question in value %}                        
+                        <li>
+                        {% if question.has_answer %}
+                            <i class="fas fa-check-circle"></i>
+                        {% endif %} 
+                        <a href="{% url 'questions:detail' question.id %}">
+                                    {{ question.question_text }}</a></li> 
+                    {% endfor %}
+                {% else %}
+                    No questions for now.
+                {% endif %}
+            {% else %}
+                {% if value %}  
+                    {% for answer in value %}  
+                        <li>
+                        {% if answer.is_accepted %}
+                            <i class="fas fa-check-circle"></i>
+                        {% endif %} 
+                        <a href="{% url 'questions:detail' answer.question.id %}">
+                                    {{ answer.answer_text }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    No answers for now.
+                {% endif %}
+            {% endif %}    
+            
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no results for that search query.</p>
+    {% endif %}      
+{% endblock %}

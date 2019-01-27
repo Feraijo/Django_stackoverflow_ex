@@ -1,0 +1,26 @@
+{% extends 'questions/base.html' %}
+
+{% block content %}
+    
+    <h4>Answers for question "{{ question.question_text }}"</h4>    
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if question.answer_set.count != 0 %}
+        <ul>
+            {% for answer in question.answer_set.all %}
+                
+                <li> 
+                {% if answer.is_accepted %}
+                    <i class="fas fa-check-circle"></i>
+                {% endif %} 
+                {{ answer.answer_text }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Be the first to add an answer.</p>
+    {% endif %}
+    <br>
+    <form>        
+        <button class="btn btn-success" type="submit" 
+        formaction="add">Add a new answer</button>
+    </form>  
+{% endblock %}
